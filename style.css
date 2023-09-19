@@ -7,6 +7,9 @@ body {
     background-color: #f0f0f0; 
 }
 
+.balance-Container{
+    margin-bottom: 10px;
+}
 .user-container {
     text-align: center; 
     padding: 20px;

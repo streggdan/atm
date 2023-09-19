@@ -21,33 +21,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($action === 'deposit') {
         $amount = $_POST['amount'];
 
-        $query = "INSERT INTO transactions (user_id, transaction_type, amount) VALUES ($user_id, 'deposit', $amount)";
-
+        $query_insert_deposit = "INSERT INTO transactions (user_id, transaction_type, amount) VALUES ($user_id, 'deposit', $amount)";
+        
         $query_update_balance = "UPDATE user_accounts SET account_balance = account_balance + $amount WHERE user_id = $user_id";
+        
+        $query_update_machine_balance = "UPDATE machine SET machine_balance = machine_balance + $amount";
 
-        mysqli_query($conn, $query);
-        mysqli_query($conn, $query_update_balance);
-
-        if (mysqli_query($conn, $query)) {
+        mysqli_autocommit($conn, false);
+        
+        if (
+            mysqli_query($conn, $query_insert_deposit) &&
+            mysqli_query($conn, $query_update_balance) &&
+            mysqli_query($conn, $query_update_machine_balance)
+        ) {
+            mysqli_commit($conn);
             $successMessage = "Deposit successful!";
         } else {
+            mysqli_rollback($conn);
             $errorMessage = "Error depositing funds: " . mysqli_error($conn);
         }
+        
+        mysqli_autocommit($conn, true); // Restore autocommit
     } elseif ($action === 'withdraw') {
         $amount = $_POST['amount'];
-
-        $query = "INSERT INTO transactions (user_id, transaction_type, amount) VALUES ($user_id, 'withdrawal', $amount)";
-
-        $query_check_balance = "SELECT account_balance FROM user_accounts WHERE user_id = $user_id";
-        $result_check_balance = mysqli_query($conn, $query_check_balance);
-        $row_check_balance = mysqli_fetch_assoc($result_check_balance);
-
-        if ($row_check_balance['account_balance'] >= $amount) {
-            $query_update_balance = "UPDATE user_accounts SET account_balance = account_balance - $amount WHERE user_id = $user_id";
-
-            mysqli_query($conn, $query);
-            mysqli_query($conn, $query_update_balance);
-
+    
+        $query_check_user_balance = "SELECT account_balance FROM user_accounts WHERE user_id = $user_id";
+        $result_check_user_balance = mysqli_query($conn, $query_check_user_balance);
+        $row_check_user_balance = mysqli_fetch_assoc($result_check_user_balance);
+        $user_account_balance = $row_check_user_balance['account_balance'];
+    
+        $query_check_machine_balance = "SELECT machine_balance FROM machine WHERE machine_id = $machine_id";
+        $result_check_machine_balance = mysqli_query($conn, $query_check_machine_balance);
+        $row_check_machine_balance = mysqli_fetch_assoc($result_check_machine_balance);
+        $machine_balance = $row_check_machine_balance['machine_balance'];
+    
+        if ($user_account_balance >= $amount && $machine_balance >= $amount) {
+            $query_update_user_balance = "UPDATE user_accounts SET account_balance = account_balance - $amount WHERE user_id = $user_id";
+            mysqli_query($conn, $query_update_user_balance);
+    
+            $query_update_machine_balance = "UPDATE machine SET machine_balance = machine_balance - $amount WHERE machine_id = $machine_id";
+            mysqli_query($conn, $query_update_machine_balance);
+    
+            $query_insert_transaction = "INSERT INTO transactions (user_id, transaction_type, amount) VALUES ($user_id, 'withdrawal', $amount)";
+            mysqli_query($conn, $query_insert_transaction);
+    
             $successMessage = "Withdrawal successful!";
         } else {
             $errorMessage = "Insufficient balance for withdrawal.";
@@ -70,13 +87,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Error / Success Message -->
         <div>
             <?php if (!empty($successMessage)) { ?>
-                <div class="success-message">
+                <div class="success">
                     <?php echo $successMessage; ?>
                 </div>
             <?php } ?>
 
             <?php if (!empty($errorMessage)) { ?>
-                <div class="error-message">
+                <div class="error">
                     <?php echo $errorMessage; ?>
                 </div>
             <?php } ?>
@@ -90,8 +107,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Buttons -->
         <div class="button-bg">
             <button id="balance-btn">Check Balance</button>
-            <button id="deposit" onclick="showContainer('deposit-container')">Deposit Funds</button>
-            <button id="withdraw" onclick="showContainer('withdraw-container')">Withdraw Funds</button>
+            <button id="deposit-btn" onclick="showContainer('deposit-container')">Deposit Funds</button>
+            <button id="withdraw-btn" onclick="showContainer('withdraw-container')">Withdraw Funds</button>
         </div>
 
         <!-- Deposit Pop Up Field -->
