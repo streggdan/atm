@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $query_update_balance = "UPDATE user_accounts SET account_balance = $new_balance WHERE user_id = $user_id";
         
             if (mysqli_query($conn, $query_update_balance)) {
-                $successMessage = "Balance updated successfully!";
+                $successMessage = "Balance Updated Successfully!";
             } else {
                 $errorMessage = "Error updating balance: " . mysqli_error($conn);
             }
@@ -66,15 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $successMessage = "Deposit successful!";
             } else {
                 mysqli_rollback($conn);
-                $errorMessage = "Error depositing funds: " . mysqli_error($conn);
-                echo $errorMessage; // Add this line to display the error message
+                $errorMessage = "Machine Error depositing funds: " . mysqli_error($conn);
             }
         
             mysqli_autocommit($conn, true);
         } else {
-            // Handle the case where machine balance data could not be retrieved
             $errorMessage = "Error retrieving machine balance: " . mysqli_error($conn);
-            echo $errorMessage; // Add this line to display the error message
         }
     }elseif ($action === 'withdraw') {
         $amount = $_POST['amount'];
