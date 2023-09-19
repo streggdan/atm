@@ -36,12 +36,14 @@ if (isset($_POST['passcode']) && isset($_POST['acc_number'])) {
 <body>
 
 <h1>ATM Simulator</h1>
-    <form action="login.php" method="post">
-        <label for="acc_number">Enter Account Number:</label>
-        <input type="text" id="acc_number" name="acc_number" required>
-        <label for="passcode">Enter Passcode:</label>
-        <input type="password" id="passcode" name="passcode" required>
-        <input type="submit" value="Login">
-    </form>    
+    <div class="login-container" >
+        <form action="login.php" method="post">
+            <label for="acc_number">Enter Account Number:</label>
+            <input type="text" id="acc_number" name="acc_number" required>
+            <label for="passcode">Enter Passcode:</label>
+            <input type="password" id="passcode" name="passcode" required>
+            <input type="submit" value="Login">
+        </form>  
+    </div>
 </body>
 </html>

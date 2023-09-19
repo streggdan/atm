@@ -173,39 +173,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="submit" value="Submit">
             </form>
         </div>
-
-        <!-- Pop Up Script -->
-        <script>
-            function showContainer(containerId) {
-                var containers = document.querySelectorAll('.deposit-Container, .withdraw-Container, .balance-container');
-                containers.forEach(function (container) {
-                    container.style.display = 'none';
-                });
-
-                var container = document.getElementById(containerId);
-                container.style.display = 'block';
-            }
-        </script>
-
-        <script>
-            $("#balance-btn").click(function () {
-                $.ajax({
-                    url: "get_balance.php",
-                    method: "POST",
-                    dataType: "json",
-                    success: function (data) {
-                        if (data.hasOwnProperty('balance')) {
-                            $("#balance-output").val(data.balance);
-                        } else {
-                            $("#balance-output").val("Balance data not available");
-                        }
-                    },
-                    error: function () {
-                        $("#balance").val("Error fetching balance");
-                    }
-                });
-            });
-        </script>
+        <a href="logout.php">Logout</a>
     </div>
+    
+    <!-- Pop Up Script -->
+    <script>
+        function showContainer(containerId) {
+            var containers = document.querySelectorAll('.deposit-Container, .withdraw-Container, .balance-container');
+            containers.forEach(function (container) {
+                container.style.display = 'none';
+            });
+
+            var container = document.getElementById(containerId);
+            container.style.display = 'block';
+        }
+    </script>
+
+    <!-- Balance Script -->
+    <script>
+        $("#balance-btn").click(function () {
+            $.ajax({
+                url: "get_balance.php",
+                method: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data.hasOwnProperty('balance')) {
+                        $("#balance-output").val(data.balance);
+                    } else {
+                        $("#balance-output").val("Balance data not available");
+                    }
+                },
+                error: function () {
+                    $("#balance").val("Error fetching balance");
+                }
+            });
+        });
+    </script>
+
+    <!-- Logout Script -->
+    <script>
+    function confirmLogout() {
+        var result = confirm("Are you sure you want to log out?");
+        if (result) {
+            window.location.href = "logout.php?logout=true";
+        } else {
+            var dropdown = document.getElementById("myDropdown");
+            if (dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+            }
+        }
+    }
+    </script>
 </body>
 </html>
