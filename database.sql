@@ -22,11 +22,11 @@ INSERT INTO machine (machine_balance)
 VALUES (500000);
 
 CREATE TABLE IF NOT EXISTS user_accounts (
-    acc_num INT PRIMARY KEY,
+    acc_number INT PRIMARY KEY,
     user_id INT,
     account_balance INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (acc_num) REFERENCES users(acc_num)
+    FOREIGN KEY (acc_number) REFERENCES users(acc_number)
 );
 
 INSERT INTO user_accounts (user_id, account_balance)
