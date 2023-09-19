@@ -1,16 +1,17 @@
 <?php
-    session_start();
-    include 'config.php';
+session_start();
+include 'config.php';
 
+if (isset($_POST['passcode'])) {
     $passcode = $_POST['passcode'];
     $query = "SELECT * FROM users WHERE pin = '$passcode'";
     $result = mysqli_query($conn, $query);
-    
+
     if (mysqli_num_rows($result) == 1) {
         $user = mysqli_fetch_assoc($result);
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['role'] = $user['role'];
-        
+
         if ($user['role'] == 'admin') {
             header("Location: admin.php");
         } else {
@@ -19,7 +20,7 @@
     } else {
         echo "Invalid passcode. Please try again.";
     }
-
+}
 ?>
 
 <!DOCTYPE html>
