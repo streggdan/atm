@@ -7,22 +7,28 @@ if (isset($_POST['passcode']) && isset($_POST['acc_number'])) {
     $passcode = $_POST['passcode'];
     $acc_number = $_POST['acc_number'];
 
-    $query = "SELECT * FROM users WHERE pin = '$passcode' AND acc_number = '$acc_number'";
+    $query = "SELECT * FROM users WHERE acc_number = '$acc_number'";
     $result = mysqli_query($conn, $query);
 
-    if (mysqli_num_rows($result) == 1) {
+    if(mysqli_num_rows($result)==1){
         $user = mysqli_fetch_assoc($result);
-        $_SESSION['acc_number'] = $user['acc_number'];
-        $_SESSION['role'] = $user['role'];
+        if($user['pin']!=$passcode){
+            echo "Invalid PIN. Please try again";
+        }else{
+            $_SESSION['acc_number'] = $user['acc_number'];
+            $_SESSION['role'] = $user['role'];
 
-        if ($user['role'] == 'admin') {
-            header("Location: admin.php");
-        } else {
-            header("Location: user.php");
+            if ($user['role'] == 'admin') {
+                header("Location: admin.php");
+            } else {
+                header("Location: user.php");
+            }
         }
-    } else {
-        echo "Invalid account number or passcode. Please try again.";
+    }else{
+        echo "Invalid account number. Please try again";
     }
+
+
 }
 ?>
 
