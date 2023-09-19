@@ -20,7 +20,7 @@ body {
     width: 450px;
 }
 
-.deposit-Container, .withdraw-Container, .balance0container {
+.deposit-Container, .withdraw-Container, .balance-container {
     display: none;
 }
 

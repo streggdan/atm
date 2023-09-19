@@ -9,6 +9,7 @@ if ($_SESSION['role'] !== 'user') {
 
 $user_id = $_SESSION['user_id'];
 $successMessage = $errorMessage = "";
+$machine_id =1; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
@@ -20,54 +21,99 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $balance = $row['account_balance'];
     } elseif ($action === 'deposit') {
         $amount = $_POST['amount'];
-
+        
         $query_insert_deposit = "INSERT INTO transactions (user_id, transaction_type, amount) VALUES ($user_id, 'deposit', $amount)";
         
-        $query_update_balance = "UPDATE user_accounts SET account_balance = account_balance + $amount WHERE user_id = $user_id";
+        $query_select_balance = "SELECT account_balance FROM user_accounts WHERE user_id = $user_id";
+        $result = mysqli_query($conn, $query_select_balance);
         
-        $query_update_machine_balance = "UPDATE machine SET machine_balance = machine_balance + $amount";
-
-        mysqli_autocommit($conn, false);
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $current_balance = $row['account_balance'];
         
-        if (
-            mysqli_query($conn, $query_insert_deposit) &&
-            mysqli_query($conn, $query_update_balance) &&
-            mysqli_query($conn, $query_update_machine_balance)
-        ) {
-            mysqli_commit($conn);
-            $successMessage = "Deposit successful!";
+            $new_balance = $current_balance + $amount;
+        
+            $query_update_balance = "UPDATE user_accounts SET account_balance = $new_balance WHERE user_id = $user_id";
+        
+            if (mysqli_query($conn, $query_update_balance)) {
+                $successMessage = "Balance updated successfully!";
+            } else {
+                $errorMessage = "Error updating balance: " . mysqli_error($conn);
+            }
         } else {
-            mysqli_rollback($conn);
-            $errorMessage = "Error depositing funds: " . mysqli_error($conn);
+            $errorMessage = "Error retrieving current balance: " . mysqli_error($conn);
         }
-        
-        mysqli_autocommit($conn, true); // Restore autocommit
-    } elseif ($action === 'withdraw') {
-        $amount = $_POST['amount'];
     
+        $query_select_machine_balance = "SELECT machine_balance FROM machine WHERE machine_id = $machine_id";
+        $result_machine_balance = mysqli_query($conn, $query_select_machine_balance);
+        
+        if ($result_machine_balance) {
+            $row_machine_balance = mysqli_fetch_assoc($result_machine_balance);
+            $current_machine_balance = $row_machine_balance['machine_balance'];
+        
+            $new_machine_balance = $current_machine_balance + $amount;
+        
+            $query_update_machine_balance = "UPDATE machine SET machine_balance = $new_machine_balance WHERE machine_id = $machine_id";
+        
+            mysqli_autocommit($conn, false);
+        
+            if (
+                mysqli_query($conn, $query_insert_deposit) &&
+                mysqli_query($conn, $query_update_balance) &&
+                mysqli_query($conn, $query_update_machine_balance)
+            ) {
+                mysqli_commit($conn);
+                $successMessage = "Deposit successful!";
+            } else {
+                mysqli_rollback($conn);
+                $errorMessage = "Error depositing funds: " . mysqli_error($conn);
+                echo $errorMessage; // Add this line to display the error message
+            }
+        
+            mysqli_autocommit($conn, true);
+        } else {
+            // Handle the case where machine balance data could not be retrieved
+            $errorMessage = "Error retrieving machine balance: " . mysqli_error($conn);
+            echo $errorMessage; // Add this line to display the error message
+        }
+    }elseif ($action === 'withdraw') {
+        $amount = $_POST['amount'];
+        
+        $machine_id = 1;
+        
         $query_check_user_balance = "SELECT account_balance FROM user_accounts WHERE user_id = $user_id";
         $result_check_user_balance = mysqli_query($conn, $query_check_user_balance);
-        $row_check_user_balance = mysqli_fetch_assoc($result_check_user_balance);
-        $user_account_balance = $row_check_user_balance['account_balance'];
-    
-        $query_check_machine_balance = "SELECT machine_balance FROM machine WHERE machine_id = $machine_id";
-        $result_check_machine_balance = mysqli_query($conn, $query_check_machine_balance);
-        $row_check_machine_balance = mysqli_fetch_assoc($result_check_machine_balance);
-        $machine_balance = $row_check_machine_balance['machine_balance'];
-    
-        if ($user_account_balance >= $amount && $machine_balance >= $amount) {
-            $query_update_user_balance = "UPDATE user_accounts SET account_balance = account_balance - $amount WHERE user_id = $user_id";
-            mysqli_query($conn, $query_update_user_balance);
-    
-            $query_update_machine_balance = "UPDATE machine SET machine_balance = machine_balance - $amount WHERE machine_id = $machine_id";
-            mysqli_query($conn, $query_update_machine_balance);
-    
-            $query_insert_transaction = "INSERT INTO transactions (user_id, transaction_type, amount) VALUES ($user_id, 'withdrawal', $amount)";
-            mysqli_query($conn, $query_insert_transaction);
-    
-            $successMessage = "Withdrawal successful!";
+        
+        if ($result_check_user_balance && mysqli_num_rows($result_check_user_balance) > 0) {
+            $row_check_user_balance = mysqli_fetch_assoc($result_check_user_balance);
+            $user_account_balance = $row_check_user_balance['account_balance'];
+        
+            $query_check_machine_balance = "SELECT machine_balance FROM machine WHERE machine_id = $machine_id";
+            $result_check_machine_balance = mysqli_query($conn, $query_check_machine_balance);
+            
+            if ($result_check_machine_balance && mysqli_num_rows($result_check_machine_balance) > 0) {
+                $row_check_machine_balance = mysqli_fetch_assoc($result_check_machine_balance);
+                $machine_balance = $row_check_machine_balance['machine_balance'];
+        
+                if ($user_account_balance >= $amount && $machine_balance >= $amount) {
+                    $query_update_user_balance = "UPDATE user_accounts SET account_balance = account_balance - $amount WHERE user_id = $user_id";
+                    mysqli_query($conn, $query_update_user_balance);
+        
+                    $query_update_machine_balance = "UPDATE machine SET machine_balance = machine_balance - $amount WHERE machine_id = $machine_id";
+                    mysqli_query($conn, $query_update_machine_balance);
+        
+                    $query_insert_transaction = "INSERT INTO transactions (user_id, transaction_type, amount) VALUES ($user_id, 'withdrawal', $amount)";
+                    mysqli_query($conn, $query_insert_transaction);
+        
+                    $successMessage = "Withdrawal successful!";
+                } else {
+                    $errorMessage = "Insufficient balance for withdrawal.";
+                }
+            } else {
+                $errorMessage = "Machine balance data not available.";
+            }
         } else {
-            $errorMessage = "Insufficient balance for withdrawal.";
+            $errorMessage = "User balance data not available.";
         }
     }
 }
@@ -101,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- Balance Shows here -->
         <div class="balance-Container" id="balance-container">
-            <input type="text" name="balance_output" id="balance" readonly value="<?php echo isset($balance) ? $balance : ''; ?>">
+            <input type="text" name="balance_output" id="balance-output" readonly value="<?php echo isset($balance) ? $balance : ''; ?>">
         </div>
 
         <!-- Buttons -->
@@ -152,9 +198,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     dataType: "json",
                     success: function (data) {
                         if (data.hasOwnProperty('balance')) {
-                            $("#balance").val(data.balance);
+                            $("#balance-output").val(data.balance);
                         } else {
-                            $("#balance").val("Balance data not available");
+                            $("#balance-output").val("Balance data not available");
                         }
                     },
                     error: function () {
