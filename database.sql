@@ -53,10 +53,6 @@ BEGIN
         FROM user_accounts
         WHERE user_id = NEW.user_id;
 
-        UPDATE user_accounts
-        SET account_balance = account_balance + NEW.amount
-        WHERE user_id = NEW.user_id;
-
         UPDATE machine
         SET machine_balance = machine_balance + NEW.amount;
     END IF;
