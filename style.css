@@ -1,0 +1,88 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    margin: 0; 
+    background-color: #f0f0f0; 
+}
+
+.user-container {
+    text-align: center; 
+    padding: 20px;
+    background-color: #fff; 
+    border-radius: 5px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: rgb(245, 110, 155);
+    width: 450px;
+}
+
+.deposit-Container, .withdraw-Container, .balance0container {
+    display: none;
+}
+
+ h1{
+    text-align: center;
+ }
+
+
+ .error, .success {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.error {
+    background-color: #f2dede;
+    color: #a94442;
+}
+
+.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+ input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.button-bg {
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+
+.button-bg button.active, .button-bg button:hover {
+    background-color: #7e082b;
+    color: #fff;
+}
+
+.button-bg button:first-of-type {
+    border-radius: 5px 0 0 5px;
+}
+.bal-btn{
+    background-color: #ECEBF2;
+    padding: 10px;
+    margin-bottom: 5px;
+    color: #2C2A29;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+
+.button-bg button:last-of-type {
+    border-radius: 0 5px 5px 0 ;
+}
+.button-bg button {
+    background-color: #ECEBF2;
+    padding: 10px;
+    color: #2C2A29;
+    cursor: pointer;
+    border: 2px solid transparent;
+}

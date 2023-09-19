@@ -1,3 +1,27 @@
+<?php
+    session_start();
+    include 'config.php';
+
+    $passcode = $_POST['passcode'];
+    $query = "SELECT * FROM users WHERE pin = '$passcode'";
+    $result = mysqli_query($conn, $query);
+    
+    if (mysqli_num_rows($result) == 1) {
+        $user = mysqli_fetch_assoc($result);
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['role'] = $user['role'];
+        
+        if ($user['role'] == 'admin') {
+            header("Location: admin.php");
+        } else {
+            header("Location: user.php");
+        }
+    } else {
+        echo "Invalid passcode. Please try again.";
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,32 +33,9 @@
 
 <h1>ATM Simulator</h1>
     <form action="login.php" method="post">
-        <input type="text" name="acct_num" id="acct_num" placeholder="Enter Account Number" required><br>
-        <input type="password" name="acct_pin" id="acct_pin" placeholder="Enter your PIN" required><br><br>
+        <label for="passcode">Enter Passcode:</label>
+        <input type="password" id="passcode" name="passcode" required>
         <input type="submit" value="Login">
-    </form>
-
-    <br><br>
-
-
-    <?php
-        $cuser="admin";
-        $cpass="admin";
-
-        if($_SERVER['REQUEST_METHOD']=='POST'){
-            $acct = $_POST["acct_num"];
-            $pin = $_POST["acct_pin"];
-
-            if($acct==$cuser && $pin==$cpass){
-                header("Location: main.php");
-            }elseif($acct==$cuser && $pin!=$cpass){
-                echo "Incorrect PIN. Please try again";
-            }else{
-                echo "The account number that you have entered does not exist";
-            }
-        }
-    
-    ?>
-    
+    </form>    
 </body>
 </html>
