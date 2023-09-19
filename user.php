@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>User Panel</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?>=<?php echo time();?>">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -160,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Deposit Pop Up Field -->
         <div class="deposit-Container" id="deposit-container">
             <form action="user.php" method="POST">
-                <label for="action">Enter Amount:</label> <br>
+                <label class="lbl" for="action">Enter Amount:</label> <br>
                 <input type="hidden" name="action" value="deposit">
                 <input type="number" id="amount" name="amount" placeholder="Deposit" required>
                 <input type="submit" value="Submit">
