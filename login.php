@@ -7,12 +7,12 @@ if (isset($_POST['passcode']) && isset($_POST['acc_number'])) {
     $passcode = $_POST['passcode'];
     $acc_number = $_POST['acc_number'];
 
-    $query = "SELECT * FROM users WHERE pin = '$passcode' AND account_number = '$acc_number'";
+    $query = "SELECT * FROM users WHERE pin = '$passcode' AND acc_number = '$acc_number'";
     $result = mysqli_query($conn, $query);
 
     if (mysqli_num_rows($result) == 1) {
         $user = mysqli_fetch_assoc($result);
-        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['acc_number'] = $user['acc_number'];
         $_SESSION['role'] = $user['role'];
 
         if ($user['role'] == 'admin') {

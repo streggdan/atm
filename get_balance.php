@@ -7,9 +7,9 @@ if ($_SESSION['role'] !== 'user') {
     exit();
 }
 
-$user_id = $_SESSION['user_id'];
+$acc_number = $_SESSION['acc_number'];
 
-$query = "SELECT account_balance FROM user_accounts WHERE user_id = $user_id";
+$query = "SELECT account_balance FROM user_accounts WHERE acc_number = $acc_number";
 $result = mysqli_query($conn, $query);
 
 if (!$result) {

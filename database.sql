@@ -2,16 +2,15 @@ CREATE DATABASE IF NOT EXISTS atm_db;
 USE atm_db;
 
 CREATE TABLE IF NOT EXISTS users (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    acc_number INT PRIMARY KEY,
     role ENUM ('admin', 'user') NOT NULL,
-    acc_number INT NOT NULL,
     pin INT NOT NULL
 );
 
-INSERT INTO users (role,acc_number, pin)
+INSERT INTO users (acc_number,role, pin)
 VALUES
-    ('admin',1910,1234),
-    ('user',1027,5678);
+    (1910,'admin',1234),
+    (1027,'user',5678);
 
 CREATE TABLE IF NOT EXISTS machine (
     machine_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -22,23 +21,21 @@ INSERT INTO machine (machine_balance)
 VALUES (500000);
 
 CREATE TABLE IF NOT EXISTS user_accounts (
-    acc_num INT PRIMARY KEY,
-    user_id INT,
+    acc_number INT PRIMARY KEY,
     account_balance INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (acc_num) REFERENCES users(acc_num)
+    FOREIGN KEY (acc_number) REFERENCES users(acc_number)
 );
 
-INSERT INTO user_accounts (user_id, account_balance)
+INSERT INTO user_accounts (acc_number, account_balance)
 VALUES 
-    (2, 50000);
+    (1027, 50000);
 
 CREATE TABLE IF NOT EXISTS transactions (
     transaction_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
+    acc_number INT,
     transaction_type ENUM ('deposit', 'withdrawal', 'admin_replenish') NOT NULL,
     amount INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (acc_number) REFERENCES users(acc_number)
 );
 
 DELIMITER $$
@@ -51,11 +48,11 @@ BEGIN
     IF NEW.transaction_type = 'deposit' THEN
         SELECT account_balance INTO account_balance
         FROM user_accounts
-        WHERE user_id = NEW.user_id;
+        WHERE acct_number = NEW.acct_number;
 
         UPDATE user_accounts
         SET account_balance = account_balance + NEW.amount
-        WHERE user_id = NEW.user_id;
+        WHERE acct_number = NEW.acct_number;
 
         UPDATE machine
         SET machine_balance = machine_balance + NEW.amount;
@@ -74,12 +71,12 @@ BEGIN
     IF NEW.transaction_type = 'withdrawal' THEN
         SELECT account_balance INTO account_balance
         FROM user_accounts
-        WHERE user_id = NEW.user_id;
+        WHERE acct_number = NEW.acct_number;
 
         IF account_balance >= NEW.amount THEN
             UPDATE user_accounts
             SET account_balance = account_balance - NEW.amount
-            WHERE user_id = NEW.user_id;
+            WHERE acct_number = NEW.acct_number;
 
             UPDATE machine
             SET machine_balance = machine_balance - NEW.amount;

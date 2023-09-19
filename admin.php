@@ -5,7 +5,7 @@ if ($_SESSION['role'] !== 'admin') {
     exit();
 }
 
-include_once('db_connect.php'); // Create a database connection
+include_once('config.php'); // Create a database connection
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $amount = $_POST['amount'];

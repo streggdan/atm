@@ -4,9 +4,10 @@ $username = "root";
 $password = "";
 $dbname = "atm_db";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-$mysqli = new mysqli($servername, $username, $password, $dbname);
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+$mysqli = mysqli_connect($servername, $username, $password, $dbname);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if (!$conn) {
+    die("Connection failed: " . $mysqli_connect_error);
 }
+?>

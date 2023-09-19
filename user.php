@@ -1,13 +1,13 @@
 <?php
 session_start();
-include('config.php');
+include 'config.php';
 
 if ($_SESSION['role'] !== 'user') {
     header("Location: index.php");
     exit();
 }
 
-$user_id = $_SESSION['user_id'];
+$acc_number = $_SESSION['acc_number'];
 $successMessage = $errorMessage = "";
 $machine_id =1; 
 
@@ -15,16 +15,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
 
     if ($action === 'balance') {
-        $query = "SELECT account_balance FROM user_accounts WHERE user_id = $user_id";
+        $query = "SELECT account_balance FROM user_accounts WHERE acc_number = $acc_number";
         $result = mysqli_query($conn, $query);
         $row = mysqli_fetch_assoc($result);
         $balance = $row['account_balance'];
     } elseif ($action === 'deposit') {
         $amount = $_POST['amount'];
         
-        $query_insert_deposit = "INSERT INTO transactions (user_id, transaction_type, amount) VALUES ($user_id, 'deposit', $amount)";
+        $query_insert_deposit = "INSERT INTO transactions (acc_number, transaction_type, amount) VALUES ($acc_number, 'deposit', $amount)";
         
-        $query_select_balance = "SELECT account_balance FROM user_accounts WHERE user_id = $user_id";
+        $query_select_balance = "SELECT account_balance FROM user_accounts WHERE acc_number = $acc_number";
         $result = mysqli_query($conn, $query_select_balance);
         
         if ($result) {
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
             $new_balance = $current_balance + $amount;
         
-            $query_update_balance = "UPDATE user_accounts SET account_balance = $new_balance WHERE user_id = $user_id";
+            $query_update_balance = "UPDATE user_accounts SET account_balance = $new_balance WHERE acc_number = $acc_number";
         
             if (mysqli_query($conn, $query_update_balance)) {
                 $successMessage = "Balance Updated Successfully!";
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $machine_id = 1;
         
-        $query_check_user_balance = "SELECT account_balance FROM user_accounts WHERE user_id = $user_id";
+        $query_check_user_balance = "SELECT account_balance FROM user_accounts WHERE acc_number = $acc_number";
         $result_check_user_balance = mysqli_query($conn, $query_check_user_balance);
         
         if ($result_check_user_balance && mysqli_num_rows($result_check_user_balance) > 0) {
@@ -93,13 +93,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $machine_balance = $row_check_machine_balance['machine_balance'];
         
                 if ($user_account_balance >= $amount && $machine_balance >= $amount) {
-                    $query_update_user_balance = "UPDATE user_accounts SET account_balance = account_balance - $amount WHERE user_id = $user_id";
+                    $query_update_user_balance = "UPDATE user_accounts SET account_balance = account_balance - $amount WHERE acc_number = $acc_number";
                     mysqli_query($conn, $query_update_user_balance);
         
                     $query_update_machine_balance = "UPDATE machine SET machine_balance = machine_balance - $amount WHERE machine_id = $machine_id";
                     mysqli_query($conn, $query_update_machine_balance);
         
-                    $query_insert_transaction = "INSERT INTO transactions (user_id, transaction_type, amount) VALUES ($user_id, 'withdrawal', $amount)";
+                    $query_insert_transaction = "INSERT INTO transactions (acc_number, transaction_type, amount) VALUES ($acc_number, 'withdrawal', $amount)";
                     mysqli_query($conn, $query_insert_transaction);
         
                     $successMessage = "Withdrawal successful!";
