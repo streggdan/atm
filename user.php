@@ -3,7 +3,7 @@ session_start();
 include('config.php');
 
 if ($_SESSION['role'] !== 'user') {
-    header("Location: index.php");
+    header("Location: login.php");
     exit();
 }
 

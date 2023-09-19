@@ -7,7 +7,7 @@ if (isset($_GET['logout']) && $_GET['logout'] === 'true') {
     session_destroy();
 }
 
-header("Location: index.php"); // Redirect back to the main page after logout
+header("Location: login.php"); // Redirect back to the main page after logout
 exit;
 
 ?>

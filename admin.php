@@ -1,16 +1,20 @@
 <?php
 session_start();
+
+include 'config.php';
+
 if ($_SESSION['role'] !== 'admin') {
-    header("Location: index.php");
+    header("Location: login.php");
+    
     exit();
 }
 
-include_once('db_connect.php'); // Create a database connection
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $amount = $_POST['amount'];
     
-    $machine_id = 1; 
+    $machine_id =1; 
 
     $query_select_machine_balance = "SELECT machine_balance FROM machine WHERE machine_id = $machine_id";
     $result_machine_balance = mysqli_query($conn, $query_select_machine_balance);
@@ -25,11 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
         mysqli_autocommit($conn, false);
     
-        if (
-            mysqli_query($conn, $query_insert_deposit) &&
-            mysqli_query($conn, $query_update_balance) &&
-            mysqli_query($conn, $query_update_machine_balance)
-        ) {
+        if ( mysqli_query($conn, $query_update_machine_balance)) {
             mysqli_commit($conn);
             $successMessage = "Machine Replenish Successful!";
         } else {
@@ -51,12 +51,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <div class="admin-container" >
+        
+        <!-- Error / Success Message -->
+        <div>
+            <?php if (!empty($successMessage)) { ?>
+                <div class="success">
+                    <?php echo $successMessage; ?>
+                </div>
+            <?php } ?>
+
+            <?php if (!empty($errorMessage)) { ?>
+                <div class="error">
+                    <?php echo $errorMessage; ?>
+                </div>
+            <?php } ?>
+        </div>
+
         <h1>Admin Panel</h1>
-        <form action="admin.php" method="POST">
-            <label for="amount">Replenish ATM Machine (Amount):</label>
-            <input type="number" id="amount" name="amount" required>
-            <input type="submit" value="Replenish">
-        </form>
+        <div class="deposit-Container" id="deposit-container">
+            <form action="admin.php" method="POST">
+                <label for="amount">Replenish ATM Machine (Amount):</label>
+                <input type="number" id="amount" name="amount" required>
+                <input type="submit" value="Replenish">
+            </form>
+        </div>
     </div>
     <a href="logout.php">Logout</a>
 

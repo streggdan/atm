@@ -7,24 +7,41 @@ if (isset($_POST['passcode']) && isset($_POST['acc_number'])) {
     $passcode = $_POST['passcode'];
     $acc_number = $_POST['acc_number'];
 
-    $query = "SELECT * FROM users WHERE pin = '$passcode' AND account_number = '$acc_number'";
-    $result = mysqli_query($conn, $query);
+    $query = "SELECT * FROM users WHERE pin = ? AND acc_number = ?";
+    
+    $stmt = mysqli_prepare($conn, $query);
 
-    if (mysqli_num_rows($result) == 1) {
-        $user = mysqli_fetch_assoc($result);
-        $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['role'] = $user['role'];
+    mysqli_stmt_bind_param($stmt, "ss", $passcode, $acc_number);
 
-        if ($user['role'] == 'admin') {
-            header("Location: admin.php");
+    mysqli_stmt_execute($stmt);
+
+ 
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ($result) {
+        if (mysqli_num_rows($result) == 1) {
+            $user = mysqli_fetch_assoc($result);
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['role'] = $user['role'];
+
+            if ($user['role'] == 'admin') {
+                header("Location: admin.php");
+            } else {
+                header("Location: user.php");
+            }
         } else {
-            header("Location: user.php");
+            echo "Invalid account number or passcode. Please try again.";
         }
     } else {
-        echo "Invalid account number or passcode. Please try again.";
+        echo "Database query error: " . mysqli_error($conn);
     }
+
+
+    mysqli_stmt_close($stmt);
 }
 ?>
+</html>
+
 
 <!DOCTYPE html>
 <html lang="en">

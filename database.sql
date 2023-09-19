@@ -22,11 +22,11 @@ INSERT INTO machine (machine_balance)
 VALUES (500000);
 
 CREATE TABLE IF NOT EXISTS user_accounts (
-    acc_number INT PRIMARY KEY,
+    acc_num INT PRIMARY KEY,
     user_id INT,
     account_balance INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id),
-    FOREIGN KEY (acc_number) REFERENCES users(acc_number)
+    FOREIGN KEY (acc_num) REFERENCES users(acc_num)
 );
 
 INSERT INTO user_accounts (user_id, account_balance)
@@ -51,6 +51,10 @@ BEGIN
     IF NEW.transaction_type = 'deposit' THEN
         SELECT account_balance INTO account_balance
         FROM user_accounts
+        WHERE user_id = NEW.user_id;
+
+        UPDATE user_accounts
+        SET account_balance = account_balance + NEW.amount
         WHERE user_id = NEW.user_id;
 
         UPDATE machine
