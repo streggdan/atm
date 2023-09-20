@@ -172,8 +172,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="number" id="amount" name="amount" placeholder="Withdraw" required>
                 <input type="submit" value="Submit">
             </form>
-        </div>
-        <a href="logout.php">Logout</a>
+        </div>        
+        <a href="javascript:void(0);p" onclick="confirmLogout()">Log Out</a>
     </div>
     
     <!-- Pop Up Script -->
@@ -217,10 +217,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (result) {
             window.location.href = "logout.php?logout=true";
         } else {
-            var dropdown = document.getElementById("myDropdown");
-            if (dropdown.classList.contains('show')) {
-                dropdown.classList.remove('show');
-            }
         }
     }
     </script>

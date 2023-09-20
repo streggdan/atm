@@ -38,7 +38,7 @@ body {
     width: 450px;
 }
 
-.deposit-Container, .withdraw-Container, .balance-container {
+.deposit-Container,.admin-deposit-Container, .withdraw-Container, .balance-container {
     display: none;
 }
 
