@@ -17,13 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $action = $_POST['action'];
 
-
-    if ($action === 'balance') {
-        $query = "SELECT account_balance FROM user_accounts WHERE user_id = $user_id";
-        $result = mysqli_query($conn, $query);
-        $row = mysqli_fetch_assoc($result);
-        $balance = $row['account_balance'];
-    } elseif ($action === 'deposit') {
+    if ($action === 'deposit') {
 
         $amount = $_POST['amount'];
 
