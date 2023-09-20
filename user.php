@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <!-- Withdraw Pop Up Field -->
-        <div class="withdraw-Container" id="withdraw-container">
+        <div class="withdraw-container" id="withdraw-container">
             <form action="user.php" method="POST">
                 <label for="action">Enter Amount:</label> <br>
                 <input type="hidden" name="action" value="withdraw">
@@ -179,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Pop Up Script -->
     <script>
         function showContainer(containerId) {
-            var containers = document.querySelectorAll('.deposit-Container, .withdraw-Container, .balance-container');
+            var containers = document.querySelectorAll('.deposit-Container, .withdraw-container, .balance-container');
             containers.forEach(function (container) {
                 container.style.display = 'none';
             });

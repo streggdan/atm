@@ -2,14 +2,14 @@
 session_start();
 include('config.php');
 
-if ($_SESSION['role'] !== 'user') {
+if ($_SESSION['role'] !== 'admin') {
     header("HTTP/1.1 403 Forbidden");
     exit();
 }
 
 $machine_id =1;
 
-$query = "SELECT machine_balance FROM machine WHERE machine_id = $machine_id";
+$query = "SELECT * FROM machine WHERE machine_id = $machine_id";
 $result = mysqli_query($conn, $query);
 
 if (!$result) {

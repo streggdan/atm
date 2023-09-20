@@ -86,18 +86,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1>Admin Panel</h1>
 
         <!-- Balance Shows here -->
-        <div class="balance-Container" id="balance-container">
+        <div class="balance-container" id="balance-container">
             <input type="text" name="balance_output" id="balance-output" readonly value="<?php echo isset($balance) ? $balance : ''; ?>">
-        </div>
+        </div> <br> <br> 
 
         <!-- Buttons -->
         <div class="button-bg">
-            <button id="balance-btn">Check Balance</button>
+            <button id="balance-btn"onclick="showContainer('balance-container')">Check Balance</button>
             <button id="deposit-btn" onclick="showContainer('deposit-container')">Deposit Funds</button>
         </div>
 
                 <!-- Deposit Pop Up Field -->
-        <div class="deposit-Container" id="deposit-container">
+        <div class="deposit-container" id="deposit-container">
             <form action="admin.php" method="POST">
                 <label class="lbl" for="action">Enter Amount:</label> <br>
                 <input type="hidden" name="action" value="deposit">
