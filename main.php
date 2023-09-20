@@ -11,7 +11,8 @@
     <ul>
         <li><a href="enquiry.php">Balance Enquiry</a></li><br>
         <li><a href="withdraw.php">Withdraw</a></li><br>
-        <li><a href="deposit.php">Deposit</a></li>
+        <li><a href="deposit.php">Deposit</a></li><br>
+        <li><a href="statement.php">View Statement</a></li>
     </ul>
     
 </body>

@@ -21,7 +21,7 @@ if (isset($_POST['passcode']) && isset($_POST['acc_number'])) {
             if ($user['role'] == 'admin') {
                 header("Location: admin.php");
             } else {
-                header("Location: user.php");
+                header("Location: main.php");
             }
         }
     }else{
