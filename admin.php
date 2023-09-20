@@ -9,6 +9,7 @@ if ($_SESSION['role'] !== 'admin') {
     exit();
 }
 
+$acc_number = $_SESSION['acc_number'];
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -22,6 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($result_machine_balance) {
         $row_machine_balance = mysqli_fetch_assoc($result_machine_balance);
         $current_machine_balance = $row_machine_balance['machine_balance'];
+
+        $query_insert_admin = "INSERT INTO transactions (acc_number, transaction_type, amount) VALUES ($acc_number, 'admin_replenish', $amount)";
+        mysqli_query($conn,$query_insert_admin);
     
         $new_machine_balance = $current_machine_balance + $amount;
     
