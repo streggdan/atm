@@ -1,0 +1,212 @@
+/* Global Reset and Defaults */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Global Typography and Styles */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #141313;
+  background-color: #285b4d;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+a {
+  display: block;
+  padding: 10px;
+  color: #fff;
+  background-color: #3498db;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+a:hover {
+  background-color: #2980b9;
+}
+
+/* Layout Containers */
+.container {
+  text-align: center;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 450px;
+}
+
+.user-container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-color: rgb(245, 110, 155);
+  width: 450px;
+}
+
+.login-container {
+  padding: 50px;
+  background-color: #b8b8bd;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.deposit-funds-container {
+  padding: 30px;
+  background-color: #f9f9f6;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(81, 77, 77, 0.1);
+  text-align: left;
+  height: 200px;
+}
+
+.check-balance-container {
+  text-align: center;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 0 top;
+}
+
+.admin-panal-container {
+  padding: 20px;
+  background-color: #e7af55;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-color: rgb(64, 165, 198);
+  width: 400px;
+}
+
+/* Typography */
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* Forms and Inputs */
+.label {
+  display: block;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.input {
+  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input[type="submit"],
+.login-button,
+.deposit-button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover,
+.login-button:hover,
+.deposit-button:hover {
+  background-color: #2980b9;
+}
+
+/* Buttons */
+.buttons-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.back-button,
+.logout-button,
+.logout-balance-button {
+  display: block;
+  background-color: #3498db;
+  color: #111010;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover,
+.logout-balance-button:hover {
+  background-color: #a5a5a9;
+}
+
+.logout-button {
+  background-color: #ff4d4d;
+  color: #120e0e;
+  font-size: 16px;
+}
+
+.logout-button:hover {
+  background-color: #e60000;
+}
+
+/* Messages */
+.message-container {
+  text-align: center;
+  margin: 20px auto;
+  padding: 10px;
+  max-width: 400px;
+}
+
+.enquiry-success-message {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.enquiry-error-message {
+  background-color: #FF5733;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
