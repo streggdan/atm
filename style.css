@@ -19,6 +19,24 @@ body {
     background-color: rgb(245, 110, 155);
     width: 450px;
 }
+
+.login-body{
+    background-image: url(resources/login-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.user-body{
+    background-image: url(resources/withdraw.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.admin-body{
+    background-image: url(resources/admin-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 .login-container {
     text-align: center; 
     padding: 20px;
@@ -28,6 +46,10 @@ body {
     background-color: rgb(175, 7, 63);
     width: 450px;
 }
+.login-container input{
+    width: 35%;
+}
+
 .admin-container {
     text-align: center; 
     padding: 20px;
@@ -108,4 +130,12 @@ body {
     color: #2C2A29;
     cursor: pointer;
     border: 2px solid transparent;
+}
+
+a button{
+    margin-top: 10px;
+    padding: 10px;
+    background-color:#b23b3b;
+    border: none;
+    border-radius: 5px;
 }
