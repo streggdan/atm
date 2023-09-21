@@ -1,4 +1,3 @@
-<!--
 <?php
 session_start();
 
@@ -52,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
--->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="admin-body">
     <div class="admin-container" >
-        
+
         <h1>Admin Panel</h1>
         
         <!-- Error / Success Message -->

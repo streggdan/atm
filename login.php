@@ -1,6 +1,4 @@
-<!-- 
-
-    <?php
+<?php
 session_start();
 include 'config.php';
 
@@ -42,10 +40,7 @@ if (isset($_POST['passcode']) && isset($_POST['acc_number'])) {
     mysqli_stmt_close($stmt);
 }
 ?>
--->
 </html>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,11 +48,11 @@ if (isset($_POST['passcode']) && isset($_POST['acc_number'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="style.css?>=<?php echo time();?>">
-    <title>ATM Simulator</title>
+    <title>ATM Login</title>
 </head>
 <body class="login-body">
     <div class="login-container" >
-        <h1>ATM Simulator</h1>
+        <h1>ATM Login</h1>
 
         <!-- Error / Success Message -->
         <div>
