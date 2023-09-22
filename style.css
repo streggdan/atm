@@ -19,6 +19,24 @@ body {
     background-color: rgb(245, 110, 155);
     width: 450px;
 }
+
+.login-body{
+    background-image: url(resources/login-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.user-body{
+    background-image: url(resources/withdraw.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.admin-body{
+    background-image: url(resources/admin-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 .login-container {
     text-align: center; 
     padding: 20px;
@@ -28,6 +46,10 @@ body {
     background-color: rgb(175, 7, 63);
     width: 450px;
 }
+.login-container input{
+    width: 35%;
+}
+
 .admin-container {
     text-align: center; 
     padding: 20px;
@@ -38,11 +60,12 @@ body {
     width: 450px;
 }
 
-.deposit-Container, .withdraw-Container, .balance-container {
+.deposit-container,.admin-deposit-Container, .withdraw-container, .balance-container {
     display: none;
 }
 
  h1{
+    color: white;
     text-align: center;
  }
 
@@ -107,4 +130,102 @@ body {
     color: #2C2A29;
     cursor: pointer;
     border: 2px solid transparent;
+}
+
+a button{
+    margin-top: 10px;
+    padding: 10px;
+    background-color:#b23b3b;
+    border: none;
+    border-radius: 5px;
+}
+.bala{
+    font-size: 20px;
+}
+table[name="statement"]{
+    border-collapse: collapse;
+    background-color: #e3dede;
+}
+table[name="statement"] th{
+    font-size: 20px;
+    padding-bottom: 5px;
+    border: 2px solid #000;
+}
+.header{
+    width: 100%;
+    margin: auto;
+}
+td{
+    padding: 2px 4px;
+    border: 2px solid #000;
+}
+.admin-container a{
+    color: #000;
+    text-decoration: none;
+    padding: 10px 10px;
+    background-color: #ff9b82;
+    border-radius: 7px;
+}
+.admin-container a:hover{
+    background-color: #ff9b82;
+    border: 2px solid #000;
+    text-decoration: underline;
+    padding: 11px;
+}
+.user-container a{
+    color: #000;
+    text-decoration: none;
+    padding: 10px 10px;
+    background-color: #7e082b;
+    border-radius: 7px;
+}
+.user-container a:hover{
+    background-color: #7e082b;
+    border: 2px solid #000;
+    text-decoration: underline;
+    padding: 11px;
+}
+table[name="admin"]{
+    table-layout: auto;
+    background-color: none;
+}
+table[name="admin"] td{
+    border: none;
+    padding: none;
+}
+.but{
+    width: 30%;
+    margin: auto;
+}
+.butt{
+    width: 70%;
+    margin: auto;
+}
+.echo{
+    color: #fff;
+}
+.statement-body {
+    display: block;
+}
+
+.logout a{
+    color: #000;
+    text-decoration: none;
+    padding: 10px 10px;
+    background-color: #7e082b;
+    border-radius: 7px;
+}
+.logout a:hover{
+    background-color: #7e082b;
+    border: 2px solid #000;
+    text-decoration: underline;
+    padding: 11px;
+}
+.stat{
+    width: 50%;
+    margin: auto;
+}
+.logout{
+    width: 50%;
+    margin: auto;
 }

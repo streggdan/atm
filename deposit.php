@@ -69,21 +69,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Deposit</title>
 </head>
-<body>
+<body class="user-body">
 
-    <h1>ATM Simulator</h1>
-    <h2>Deposit Funds</h2>
+    <div class="user-container">
 
-    <form action="deposit.php" method="post">
-        <input type="number" name="dep_num" id="dep_num" placeholder="Enter the amount to be deposited" required><br><br>
-        <input type="submit" value="Deposit">
-    </form>
-    <br>
-    <a href="main.php">Back</a><br>
-    <a href="logout.php">Logout</a><br>
-    <div>
+        <h1>ATM Simulator</h1>
+        <h2>Deposit Funds</h2>
+
+        <form action="deposit.php" method="post">
+            <input type="number" name="dep_num" id="dep_num" placeholder="Enter deposit" required><br><br>
+            <input type="submit" value="Deposit">
+        </form>
+        <br>
+        <a href="main.php">Back</a>
+        <a href="logout.php">Logout</a><br>
+        <div>
             <?php if (!empty($successMessage)) { ?>
                 <div class="success">
                     <?php echo $successMessage; ?>
@@ -96,6 +99,7 @@
                 </div>
             <?php } ?>
         </div>
+    </div>
 
     
 </body>

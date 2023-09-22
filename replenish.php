@@ -51,9 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="style.css">
     <title>Replenish Machine</title>
 </head>
-<body>
+<body class="admin-body">
     <div class="admin-container" >
         
         <!-- Error / Success Message -->
@@ -74,13 +75,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1>Admin Panel</h1>
         <div class="deposit-Container" id="deposit-container">
             <form action="admin.php" method="POST">
+                <div class="echo">
                 <label for="amount">Replenish ATM Machine (Amount):</label>
+                </div>
                 <input type="number" id="amount" name="amount" required>
                 <input type="submit" value="Replenish">
             </form>
         </div>
+        <br><br>
+        <a href="logout.php">Logout</a><br>
     </div>
-    <a href="logout.php">Logout</a>
+    
 
     <!-- Logout Script -->
     <script>

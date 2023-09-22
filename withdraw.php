@@ -54,21 +54,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Withdraw</title>
 </head>
-<body>
+<body class="user-body">
 
-    <h1>ATM Simulator</h1>
-    <h2>Withdraw Funds</h2>
-    <form action="withdraw.php" method="post">
-        <label for="with_num">Enter amount to withdraw</label><br>
-        <input type="number" name="with_num" id="with_num" placeholder="Enter here" required><br><br>
-        <input type="submit" value="Withdraw">
-    </form>
-    <br>
-    <a href="main.php">Back</a><br>
-    <a href="logout.php">Logout</a><br>
-    <div>
+    <div class="user-container">
+        <h1>ATM Simulator</h1>
+        <h2>Withdraw Funds</h2>
+        <form action="withdraw.php" method="post">
+            <label for="with_num">Enter amount to withdraw</label><br>
+            <input type="number" name="with_num" id="with_num" placeholder="Enter withdraw here" required><br><br>
+            <input type="submit" value="Withdraw">
+        </form>
+        <br>
+        <a href="main.php">Back</a>
+        <a href="logout.php">Logout</a><br>
+        <div>
             <?php if (!empty($successMessage)) { ?>
                 <div class="success">
                     <?php echo $successMessage; ?>
@@ -81,6 +83,7 @@
                 </div>
             <?php } ?>
         </div>
+    </div>
     
 </body>
 </html>

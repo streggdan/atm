@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="style.css">
     <title>Replenish Machine</title>
 </head>
-<body>
+<body class="admin-body">
     <div class="admin-container" >
         <h1>Admin Panel</h1>
-            <a href="check.php">Check Machine Balance</a><br>
-            <a href="replenish.php">Replenish Machine</a><br>
-            <a href="statement.php">Check Logs</a><br><br>
+            <a href="check.php">Check Machine Balance</a><br><br><br>
+            <a href="replenish.php">Replenish Machine</a><br><br><br>
+            <a href="statement.php">Check Logs</a><br><br><br><br>
+            <a href="logout.php">Logout</a><br>
     </div>
-    <a href="logout.php">Logout</a>
+    
 
     <!-- Logout Script -->
     <script>
